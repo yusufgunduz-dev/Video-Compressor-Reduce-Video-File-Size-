@@ -1,70 +1,73 @@
-# Video Sıkıştırma ve Düzenleme Aracı
+<div align="center">
 
-Bu proje, videoları sıkıştırmak, boyutlarını küçültmek ve belirli aralıklarla kesmek için geliştirilmiş masaüstü bir Python uygulamasıdır. Modern arayüzü sayesinde kullanıcı dostudur ve FFmpeg altyapısını kullanarak yüksek kaliteli işlemler gerçekleştirir.
+<img src="assets/banner.svg" alt="Video Compressor masaüstü aracı" width="100%" />
+
+# Video Compressor
+
+**FFmpeg ile video sıkıştırma ve kesme için modern Python masaüstü uygulaması.**
+
+![Python](https://img.shields.io/badge/Python-3776ab?style=flat-square&logo=python&logoColor=white)
+![FFmpeg](https://img.shields.io/badge/FFmpeg-007808?style=flat-square&logo=ffmpeg&logoColor=white)
+![CustomTkinter](https://img.shields.io/badge/CustomTkinter-1f6feb?style=flat-square)
+![License](https://img.shields.io/badge/Lisans-MIT-green?style=flat-square)
+
+</div>
 
 ## Özellikler
 
-*   **Video Sıkıştırma:** Gelişmiş CRF ve `slow` preset ayarları ile videonuzu kaliteden en az ödün vererek maksimum oranda sıkıştırır. Ses dosyalarını da optimize eder (AAC 48k).
-*   **Video Kesme (Trim):** Videonun sadece belirli bir bölümünü (başlangıç ve bitiş saniyeleri) alıp kaydedebilirsiniz.
-*   **Çözünürlük Ayarı:** Videoları 720p, 480p gibi çözünürlüklere yeniden boyutlandırabilirsiniz.
-*   **Kullanıcı Dostu Arayüz:** CustomTkinter ile oluşturulmuş şık, koyu mod destekli arayüz.
-*   **İlerleme Takibi:** İşlemler sırasında yüzdelik ilerleme çubuğu ile süreci takip edebilirsiniz.
-*   **Arka Plan İşlemleri:** Konsol penceresi açılmadan, temiz bir deneyim sunar.
+- **Video sıkıştırma:** H.264 (`libx264`), `slow` preset ve ayarlanabilir CRF ile kaliteden en az ödün vererek dosya boyutunu küçültür. Ses AAC 48 kbps olarak yeniden kodlanır.
+- **CRF ayarı:** 18 ile 51 arası kaydırıcı, varsayılan 36. Değer arttıkça dosya küçülür, kalite düşer.
+- **Çözünürlük seçimi:** Orijinal, 1920, 1280 veya 854 piksel genişlik (oran korunur).
+- **Video kesme (trim):** Başlangıç ve bitiş saniyesini girerek yalnızca istediğiniz bölümü kaydedin.
+- **İlerleme çubuğu:** İşlem sırasında yüzde olarak ilerleme gösterir, arayüz donmaz.
+- **Video bilgisi:** Seçilen dosyanın süre, çözünürlük ve boyut bilgilerini gösterir.
+- **Koyu, açık ve sistem teması.**
 
-## Kurulum ve Gereksinimler
+## Gereksinimler
 
-Bu projeyi bilgisayarınızda çalıştırmak için Python kurulu olmalıdır. Ayrıca sisteminizde **FFmpeg** yüklü ve `PATH` değişkenine eklenmiş olmalıdır.
+- Python 3
+- [FFmpeg](https://ffmpeg.org/download.html): `PATH` içinde erişilebilir olmalı
 
-1.  **Repo'yu klonlayın:**
-    ```bash
-    git clone https://github.com/Gunduzy12/Video-Compressor-Reduce-Video-File-Size-.git
-    cd Video-Compressor-Reduce-Video-File-Size-
-    ```
+## Kurulum
 
-2.  **Sanal ortam oluşturun (Önerilen):**
-    ```bash
-    python -m venv venv
-    # Windows için:
-    venv\Scripts\activate
-    # Mac/Linux için:
-    source venv/bin/activate
-    ```
+```bash
+git clone https://github.com/yusufgunduz-dev/Video-Compressor-Reduce-Video-File-Size-.git
+cd Video-Compressor-Reduce-Video-File-Size-
 
-3.  **Gerekli kütüphaneleri yükleyin:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+python -m venv venv
+venv\Scripts\activate        # macOS ve Linux: source venv/bin/activate
+
+pip install -r requirements.txt
+```
 
 ## Kullanım
-
-Uygulamayı başlatmak için ana dizindeki `main.py` dosyasını çalıştırın:
 
 ```bash
 python main.py
 ```
 
-1.  **Dosya Seç:** "Dosya Seç" butonuna tıklayarak işlem yapmak istediğiniz videoyu yükleyin.
-2.  **Sıkıştırma Ayarları:**
-    *   **CRF Değeri:** Sıkıştırma seviyesini belirler. Varsayılan **36**'dır. Değer arttıkça (örneğin 40-50) dosya boyutu küçülür ancak görüntü kalitesi düşer.
-    *   **Çözünürlük:** İsterseniz videonun çözünürlüğünü değiştirebilirsiniz.
-3.  **Kesme (Trim):** Sadece belirli bir aralığı almak istiyorsanız Başlangıç ve Bitiş sürelerini saniye cinsinden girin.
-4.  **İşlemi Başlat:** Butona basın ve arkanıza yaslanın.
+1. **Dosya Seç** ile videoyu yükleyin.
+2. **Sıkıştır** sekmesinde CRF değerini ve çözünürlüğü seçin, ardından kaydedilecek yeri belirleyin.
+3. Yalnızca bir bölüm istiyorsanız **Kes** sekmesinde saniye aralığını girin.
 
-## EXE Oluşturma (Build)
+## Proje Yapısı
 
-Uygulamayı `.exe` formatına dönüştürmek isterseniz `pyinstaller` kullanabilirsiniz:
-
-```bash
-pyinstaller --noconfirm --clean GunduzAI_VideoTool.spec
+```
+main.py                    Arayüz (CustomTkinter)
+app/core/video_processor.py   FFmpeg ile bilgi alma, sıkıştırma ve kesme
+requirements.txt           Bağımlılıklar
 ```
 
-## Katkıda Bulunma
+## EXE Oluşturma
 
-1.  Forklayın
-2.  Dal (Branch) oluşturun
-3.  Değişikliklerinizi yapın ve gönderin
-4.  Pull Request oluşturun
+```bash
+pyinstaller --noconfirm --onefile --windowed --collect-all customtkinter --name VideoCompressor main.py
+```
 
 ## Lisans
 
-MIT Lisansı.
+[MIT](LICENSE)
+
+---
+
+<sub>Geliştirici: [Yusuf Gündüz](https://github.com/yusufgunduz-dev) · [Revolasoft](https://revolasoft.com)</sub>
